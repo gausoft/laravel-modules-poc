@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Facades\Module;
 use App\Models\Module as ModuleModel;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 class AppServiceProvider extends ServiceProvider
@@ -21,8 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->registerModules();
-        $this->registerRoutes();
+        $this->handleModules();
     }
 
     protected function registerModules()
@@ -37,26 +37,25 @@ class AppServiceProvider extends ServiceProvider
         }
     }
 
-    protected function registerRoutes()
+    /**
+     * Handle module activation and deactivation.
+     */
+    protected function handleModules(): void
     {
-        $modules = ModuleModel::where('is_active', true)->pluck('name')->toArray();
+        $activeModules = ModuleModel::where('is_active', true)->pluck('name')->toArray();
+        $allModules = Module::all();
 
-        foreach ($modules as $moduleName) {
-            $module = Module::find($moduleName);
-
-            if ($module) {
-                Route::group([
-                    'namespace' => $module->getNamespace(),
-                    'prefix' => 'api',
-                    'middleware' => 'api',
-                ], function () use ($module) {
-                    $routesPath = $module->getPath() . '/Routes/api.php';
-
-                    if (file_exists($routesPath)) {
-                        require $routesPath;
-                    }
-                });
+        foreach ($allModules as $module) {
+            if (!in_array($module->getName(), $activeModules)) {
+                Module::disable($module->getName());
             }
+        }
+
+        // Activate only active modules
+        foreach ($activeModules as $moduleName) {
+            Module::enable($moduleName);
+
+            $this->registerModules();
         }
     }
 }

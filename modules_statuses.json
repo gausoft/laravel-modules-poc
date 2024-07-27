@@ -1,7 +1,7 @@
 {
     "Core": true,
-    "Stock": true,
+    "Stock": false,
     "Accounting": true,
-    "Hr": true,
-    "Crm": true
+    "Hr": false,
+    "Crm": false
 }
