@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Accounting\Http\Controllers\AccountingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +14,4 @@ use Modules\Accounting\Http\Controllers\AccountingController;
 */
 
 Route::group([], function () {
-    Route::resource('accounting', AccountingController::class)->names('accounting');
 });

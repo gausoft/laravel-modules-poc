@@ -11,6 +11,9 @@ class StockDatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // $this->call([]);
+        $this->call([
+            CreateProductsAndCategoriesSeeder::class,
+            CreateProductStockListSeeder::class,
+        ]);
     }
 }

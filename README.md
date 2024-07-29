@@ -9,8 +9,6 @@ This project is a Proof of Concept (POC) for a mini ERP using Laravel 11 and the
   - [Project description](#project-description)
   - [Modules](#modules)
   - [Installation](#installation)
-  - [Configuration](#configuration)
-  - [Dynamic loading approach](#dynamic-loading-approach)
   - [Usage](#usage)
   - [Contributing](#contributing)
   - [License](#license)
@@ -71,32 +69,9 @@ To install the project, follow these steps:
     php artisan serve
     ```
 
-## Configuration
-
-[TODO]
-
-<!-- After installing the project, you can activate or deactivate modules via the user interface available at `/modules`. Ensure that the modules you wish to activate are marked as active in the database. -->
-
-## Dynamic loading approach
-
-The project uses the `nWidart/laravel-modules` package to manage modules. Modules are dynamically loaded based on their status in the database. Only active modules are loaded, and their routes are registered. Here's how it works:
-
-1. **Module Registration**: Modules are registered in the `AppServiceProvider` using the `registerModules()` method, which checks the status of modules in the database.
-
-2. **Route Registration**: Routes for modules are registered only if the module is active. This is handled in the `registerRoutes()` method of the `AppServiceProvider`.
-
 ## Usage
 
-Once the server is running, you can access the module routes via the following API endpoints:
-
-- **Core**: `/api/core`
-- **Stock**: `/api/stock`
-- **Sales**: `/api/sales`
-- **Accounting**: `/api/accounting`
-- **HR**: `/api/hr`
-- **CRM**: `/api/crm`
-
-Responses from each endpoint should indicate that the corresponding module is active.
+Navigate to <http://localhost:8000/api/documentation> to access the Swagger documentation.
 
 ## Contributing
 

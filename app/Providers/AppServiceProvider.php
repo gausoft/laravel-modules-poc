@@ -5,8 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Nwidart\Modules\Facades\Module;
 use App\Models\Module as ModuleModel;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Route;
+use Modules\Stock\Contracts\StockServiceInterface;
+use Modules\Stock\Services\StockService;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -15,6 +15,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(StockServiceInterface::class, StockService::class);
     }
 
     /**

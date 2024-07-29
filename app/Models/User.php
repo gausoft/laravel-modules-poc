@@ -6,10 +6,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+use OpenApi\Attributes as OA;
+use OwenIt\Auditing\Contracts\Auditable;
+
+#[OA\Schema(
+    schema: 'User',
+    title: 'User',
+    description: 'User model',
+    properties: [
+        new OA\Property(property: 'id', type: 'integer', description: 'ID de l\'utilisateur'),
+        new OA\Property(property: 'name', type: 'string', description: 'Nom de l\'utilisateur'),
+        new OA\Property(property: 'email', type: 'string', description: 'Email de l\'utilisateur'),
+        new OA\Property(property: 'created_at', type: 'string', format: 'date-time', description: 'Date de création'),
+    ],
+    type: 'object'
+)]
+class User extends Authenticatable implements Auditable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles, HasApiTokens, \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.

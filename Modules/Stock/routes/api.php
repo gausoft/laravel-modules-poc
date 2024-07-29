@@ -1,22 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Modules\Stock\Http\Controllers\ProductCategoryController;
+use Modules\Stock\Http\Controllers\ProductController;
 use Modules\Stock\Http\Controllers\StockController;
-
-/*
- *--------------------------------------------------------------------------
- * API Routes
- *--------------------------------------------------------------------------
- *
- * Here is where you can register API routes for your application. These
- * routes are loaded by the RouteServiceProvider within a group which
- * is assigned the "api" middleware group. Enjoy building your API!
- *
-*/
+use Modules\Stock\Http\Controllers\StockLocationController;
 
 Route::middleware(['module.loader'])->group(function () {
-    Route::get('stock', [StockController::class, 'index'])->name('stock.index');
     Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-        Route::apiResource('stock', StockController::class)->names('stock');
+        Route::apiResource('stock-locations', StockLocationController::class);
+        Route::apiResource('stocks', StockController::class)->names('stock');
+
+        Route::apiResource('products', ProductController::class);
+        Route::apiResource('categories', ProductCategoryController::class);
     });
 });

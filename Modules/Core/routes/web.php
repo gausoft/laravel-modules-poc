@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Core\Http\Controllers\CoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +14,4 @@ use Modules\Core\Http\Controllers\CoreController;
 */
 
 Route::group([], function () {
-    Route::resource('core', CoreController::class)->names('core');
 });

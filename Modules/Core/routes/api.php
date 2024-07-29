@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Core\Http\Controllers\CoreController;
+use Modules\Core\Http\Controllers\AuthController;
 
 /*
  *--------------------------------------------------------------------------
@@ -15,8 +15,12 @@ use Modules\Core\Http\Controllers\CoreController;
 */
 
 Route::middleware(['module.loader'])->group(function () {
-    Route::get('core', [CoreController::class, 'index'])->name('core.index');
+    Route::post('/v1/auth/login', [AuthController::class, 'login']);
+
     Route::middleware(['auth:sanctum'])->prefix('v1')->group(function () {
-        Route::apiResource('core', CoreController::class)->names('core');
+        Route::get('/auth/me', [AuthController::class, 'me']);
+
+        Route::post('/auth/logout', [AuthController::class, 'logout']);
+        Route::post('/auth/roles', [AuthController::class, 'createRole']);
     });
 });
